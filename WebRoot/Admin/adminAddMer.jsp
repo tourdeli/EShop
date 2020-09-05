@@ -69,7 +69,7 @@
      </tr>
       <tr height="24">
         <td valign="top"  align="right"><bean:message key="mer.leaveFactoryDate"/>：</td>
-        <td><html:text  property="leaveFactoryDate" size="41"  onclick="popupWin(this)" styleClass="textBox"/></td>
+        <td><html:text property="leaveFactoryDate" size="41" readonly="true" onclick="popupWin(this)" styleClass="textBox"/></td>
      </tr>	 	 	 	 
       <tr height="24">
         <td colspan="2" align="center">
@@ -100,9 +100,45 @@
 	function popupWin(temp){
 		var xx=event.clientX;
 		var yy=event.clientY;
-		var value = showModalDialog("../JS/selectDate.htm",window,"dialogWidth:350px;dialogHeight:180px;center:0;dialogLeft:"+xx+";dialogTop:"+yy+";status:0;");
-		temp.value=value;
+		// var value = showModalDialog("../JS/selectDate.htm",window,"dialogWidth:350px;dialogHeight:180px;center:0;dialogLeft:"+xx+";dialogTop:"+yy+";status:0;");
+        myShowModalDialog("../JS/selectDate.htm",500, 300, function(resv){
+           // alert(resv);//原窗口关闭处理流程
+            if(resv) {//当存在才赋值
+                temp.value = resv;
+            }
+        });
+		// temp.value=value;
 	}
+
+
+    function myShowModalDialog(url, width, height, callback)
+    {
+        if(window.showModalDialog)
+        {
+            if(callback)
+            {
+                var rlt = showModalDialog(url, '', 'resizable:no;scroll:no;status:no;center:yes;help:no;dialogWidth:' + width + ' px;dialogHeight:' + height + ' px');
+                if(rlt)
+                    return callback(rlt);
+                else
+                {
+                    callback(window.returnValue);
+                }
+            }
+            else
+                showModalDialog(url, '', 'resizable:no;scroll:no;status:no;center:yes;help:no;dialogWidth:' + width + ' px;dialogHeight:' + height + ' px');
+        }
+        else
+        {
+            if(callback)
+                window.showModalDialogCallback = callback;
+            var top = (window.screen.availHeight-30-height)/2; //获得窗口的垂直位置;
+            var left = (window.screen.availWidth-10-width)/2; //获得窗口的水平位置;
+            var winOption = "top="+top+",left="+left+",height="+height+",width="+width+",resizable=no,scrollbars=no,status=no,toolbar=no,location=no,directories=no,menubar=no,help=no";
+            window.open(url,window, winOption);
+        }
+    }
+
 </script>	
 </body>
 </html>
