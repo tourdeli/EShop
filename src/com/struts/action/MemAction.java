@@ -11,6 +11,10 @@ import com.ORM.*;
 import com.base.*;
 import com.service.*;
 import com.struts.form.MemberForm;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.sql.Timestamp;
+
 
 /** 
  * MyEclipse Struts
@@ -39,13 +43,21 @@ public class MemAction extends BaseAction {
 		ActionMessages msgs = new ActionMessages();
 		try{
 			Member mem = new Member();
+
+			//取当前时间
+			Date nowdate=new Date();
+            //转换时间格式
+			SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//	user.setCreateTime(Timestamp.valueOf(simpleDate.format(nowdate)));
+		//	user.setExpireTime(Timestamp.valueOf(simpleDate.format(nowdate)));
+
 			mem.setMemberlevel(service.loadMemberLevel(memberForm.getMemberlevel()));
 			mem.setMemberName(memberForm.getMemberName().trim());
 			mem.setLoginName(memberForm.getLoginName().trim());
 			mem.setLoginPwd(memberForm.getLoginPwd().trim());
 			mem.setLoginTimes(new Integer(0));
-			mem.setRegDate(new Date());			
-			mem.setLastDate(new Date());
+			mem.setRegDate(Timestamp.valueOf(simpleDate.format(nowdate)));
+			mem.setLastDate(Timestamp.valueOf(simpleDate.format(nowdate)));
 			mem.setAddress(memberForm.getAddress().trim());
 			mem.setPhone(memberForm.getPhone().trim());
 			mem.setZip(memberForm.getZip().trim());

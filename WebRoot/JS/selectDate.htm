@@ -10,29 +10,13 @@ body {
 -->
 </style></head>
 <script language="javascript" src="common/selectDate.js"></script>
-<body onLoad="selectDate(selectedDate)"  onunload="returnDate()">
+<body onLoad="selectDate(selectedDate)" onUnload="returnDate()">
 <input type="hidden" id="selectedDate"  name="selectedDate">
 </body>
 <script language="javascript">
 function returnDate(){	
 	window.returnValue=selectedDate.value;
-   // alert(3)
-    SetReturnValue(selectedDate.value);
-   // window.close();
-}
-function SetReturnValue(rlt)
-{
-    // var rlt = "我想返回的数值";
-
-    window.returnValue = rlt;//ie之类浏览器
-
-    if(opener != null && opener != 'undefined')
-    {
-        window.opener.returnValue = rlt; //chrome有些版本有问题, 所以在子窗口同时修改了父窗口的ReturnValue(能执行showModalDialog的chrome)
-        if(window.opener.showModalDialogCallback)
-            window.opener.showModalDialogCallback(rlt);
-    }
- //   window.close();
+	window.close();
 }
 </script>
 </html>
